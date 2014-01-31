@@ -13,6 +13,7 @@ end
 post '/message' do
   puts "got message #{params.to_json}"
   to_redis(params.to_json)
+  200
 end
 
 get '/replies' do

@@ -6,7 +6,7 @@ require_relative 'text-adventure/lib/game'
 def setup_game
   b = Bootstrap.new 'text-adventure/data/epic_adventure/locations.yml', 'text-adventure/data/epic_adventure/messages.yml'
   @game = Game.new(b)
-  @bot_name = "@adventure"
+  @bot_name = ["@adventure","@a"]
 end
 
 def wait_for_messages
@@ -21,7 +21,9 @@ def wait_for_messages
 end
 
 def extract_message(json)
-  json["text"].gsub(@bot_name,"").strip
+  @bot_name.each(json) do |name|
+    js["text"] = js["text"].gsub(/^#{name}/,"").strip
+  end
 end
 
 def send_reply(message)
