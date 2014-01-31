@@ -21,9 +21,10 @@ def wait_for_messages
 end
 
 def extract_message(json)
-  @bot_name.each(json) do |name|
-    js["text"] = js["text"].gsub(/^#{name}/,"").strip
+  @bot_name.each do |name|
+    json["text"] = json["text"].gsub(/^#{name}/,"").strip
   end
+  json["text"]
 end
 
 def send_reply(message)
