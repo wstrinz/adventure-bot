@@ -1,19 +1,20 @@
 require 'redis'
 require 'rest-client'
+require 'json'
 #require 'pry'; binding.pry
 def wait_for_replies
   loop do
     message = (@from_redis ||= Redis.new).brpop "to_user"
-    to_slack message.last
+    to_slack JSON.parse(message.last)
   end
 end
 
-def to_slack(message)
-  puts "said #{message} to slack"
+def to_slack(json_message)
+  puts "said #{json_message} to slack"
   args = {
     "channel" => "#metal-graveyard",
     "username" => "adventure-bot",
-    "text" => message
+    "text" => json_message["response"]
   }
 
   url = 'https://bendyworks.slack.com/services/hooks/incoming-webhook?token=' + ENV["SLACK_TOKEN"]

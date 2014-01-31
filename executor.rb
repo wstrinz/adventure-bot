@@ -5,6 +5,7 @@ require_relative 'text-adventure/lib/game'
 def setup_game
   b = Bootstrap.new 'text-adventure/data/epic_adventure/locations.yml', 'text-adventure/data/epic_adventure/messages.yml'
   @game = Game.new(b)
+  @bot_name = "@adventure"
 end
 
 def wait_for_messages
@@ -12,8 +13,13 @@ def wait_for_messages
   loop do
     msg = @from_redis.brpop("to_game").last
     puts "received #{msg}"
-    send_reply(execute_message(msg))
+    js = JSON.parse(msg)
+    send_reply(response: execute_message(extract_message(js)), original: js)
   end
+end
+
+def extract_message(json)
+  js["text"]
 end
 
 def send_reply(message)
