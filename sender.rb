@@ -10,7 +10,7 @@ def wait_for_replies
 end
 
 def to_slack(json_message)
-  puts "said #{json_message} to slack"
+  puts "said #{json_message["response"]} to slack"
   args = {
     "channel" => "#metal-graveyard",
     "username" => "adventure-bot",

@@ -1,4 +1,5 @@
 require 'redis'
+require 'json'
 require_relative 'text-adventure/lib/bootstrap'
 require_relative 'text-adventure/lib/game'
 
@@ -12,19 +13,20 @@ def wait_for_messages
   @from_redis ||= Redis.new
   loop do
     msg = @from_redis.brpop("to_game").last
-    puts "received #{msg}"
     js = JSON.parse(msg)
-    send_reply(response: execute_message(extract_message(js)), original: js)
+		query = extract_message(js)
+		puts "sending '#{query}' to game"
+    send_reply(response: execute_message(query), original: js)
   end
 end
 
 def extract_message(json)
-  js["text"]
+  json["text"].gsub(@bot_name,"").strip
 end
 
 def send_reply(message)
-  puts "sending #{message}"
-  (@to_redis ||= Redis.new).lpush("to_user",message)
+  puts "sending #{message.to_json}"
+  (@to_redis ||= Redis.new).lpush("to_user",message.to_json)
 end
 
 def execute_message(message)
