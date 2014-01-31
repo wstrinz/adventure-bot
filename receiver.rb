@@ -1,4 +1,5 @@
 require 'redis'
+require 'json'
 require 'sinatra'
 
 helpers do
@@ -10,8 +11,8 @@ helpers do
 end
 
 post '/message' do
-  puts "got message #{params}"
-  to_redis(params)
+  puts "got message #{params.to_json}"
+  to_redis(params.to_json)
 end
 
 get '/replies' do
