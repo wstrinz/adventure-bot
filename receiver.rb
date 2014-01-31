@@ -10,7 +10,8 @@ helpers do
 end
 
 post '/message' do
-  to_redis(params[:message])
+  puts "got message #{params}"
+  to_redis(params)
 end
 
 get '/replies' do
