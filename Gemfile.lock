@@ -1,0 +1,29 @@
+GIT
+  remote: https://github.com/wstrinz/dorothy.git
+  revision: cd0bf13671770bf684ed7b3286b9d0013e02a813
+  specs:
+    dorothy (0.0.2.pre)
+
+GEM
+  specs:
+    mime-types (2.0)
+    rack (1.5.2)
+    rack-protection (1.5.1)
+      rack
+    redis (3.0.7)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    sinatra (1.4.4)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    tilt (1.4.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  dorothy!
+  redis
+  rest-client
+  sinatra
