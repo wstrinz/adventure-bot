@@ -17,6 +17,7 @@ def to_slack(json_message)
     "text" => json_message["response"]
   }
 
+  raise "No SLACK_TOKEN environment variable specified!" unless ENV["SLACK_TOKEN"]
   url = 'https://bendyworks.slack.com/services/hooks/incoming-webhook?token=' + ENV["SLACK_TOKEN"]
   RestClient.post url, args.to_json, content_type: :json
 end
