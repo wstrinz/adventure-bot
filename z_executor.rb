@@ -52,10 +52,14 @@ def check_command(message)
 end
 
 def execute_message(message)
-  @game.output.clear
-  @game.keyboard << message + "\n"
-  @game.run
-  @game.output.join
+  begin
+    @game.output.clear
+    @game.keyboard << message + "\n"
+    @game.run
+    @game.output.join
+  rescue
+    "sorry, there was an error running '#{message}':  " + $!.message.to_s
+  end
 end
 
 if __FILE__ == $0
