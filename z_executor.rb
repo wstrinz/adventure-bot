@@ -13,9 +13,15 @@ def wait_for_messages
   loop do
     msg = @from_redis.brpop("to_game").last
     js = JSON.parse(msg)
-		query = extract_message(js)
-		puts "sending '#{query}' to game"
-    send_reply(response: execute_message(query), original: js)
+    query = extract_message(js)
+    command_response = check_command(query)
+    if command_response
+      puts "special command #{query} run"
+      send_reply(response: command_response, original: js)
+    else
+      puts "sending '#{query}' to game"
+      send_reply(response: execute_message(query), original: js)
+    end
   end
 end
 
@@ -29,6 +35,20 @@ end
 def send_reply(message)
   puts "sending #{message.to_json}"
   (@to_redis ||= Redis.new).lpush("to_user",message.to_json)
+end
+
+def check_command(message)
+  case message
+  when /^\/reset/
+    setup_game
+    @game.output.join
+  when /^\/load .+/
+    "loading other stories not implemented yet"
+  when /^\/help/
+    "special commands are '/reset', and '/load <file>'"
+  else
+    nil
+  end
 end
 
 def execute_message(message)

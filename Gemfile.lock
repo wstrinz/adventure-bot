@@ -5,6 +5,7 @@ GIT
     dorothy (0.0.2.pre)
 
 GEM
+  remote: https://rubygems.org/
   specs:
     mime-types (2.0)
     rack (1.5.2)
