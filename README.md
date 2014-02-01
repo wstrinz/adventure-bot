@@ -13,4 +13,7 @@ Text adventures in Slack
 
 ## Running
 
-`start.sh`
+```shell
+bundle
+bundle exec ./start.sh
+```
