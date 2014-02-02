@@ -12,7 +12,7 @@ end
 def to_slack(json_message)
   puts "said #{json_message["response"]} to slack"
   args = {
-    "channel" => "#metal-graveyard",
+    #"channel" => "#metal-graveyard",
     "username" => "adventure-bot",
     "text" => json_message["response"]
   }
