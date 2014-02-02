@@ -78,7 +78,9 @@ def list_games
 end
 
 def load_remote(url)
-  open("games/" + url_to_filename(url),'w'){|f| f.write open(url).read }
+  open("games/" + url_to_filename(url),'w'){|f|
+    f.write open(url).read
+  }
 end
 
 def execute_message(message)
