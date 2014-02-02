@@ -65,7 +65,11 @@ def load_game(name)
     load_remote name
     setup_game("games/#{url_to_filename(name)}")
   else
-    setup_game("games/#{name}")
+    if File.exist?("games/#{name}")
+      setup_game("games/#{name}")
+    else
+      "cannot find file games/#{name}"
+    end
   end
 end
 
