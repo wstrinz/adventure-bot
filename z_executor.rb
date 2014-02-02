@@ -79,6 +79,7 @@ end
 
 def load_remote(url)
   open("games/" + url_to_filename(url),'w'){|f|
+    require 'pry'; binding.pry
     f.write open(url).read
   }
 end
