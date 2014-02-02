@@ -16,14 +16,16 @@ def wait_for_messages
   loop do
     msg = @from_redis.brpop("to_game").last
     js = JSON.parse(msg)
-    query = extract_message(js)
-    command_response = check_command(query)
-    if command_response
-      puts "special command #{query} run"
-      send_reply(response: command_response, original: js)
-    else
-      puts "sending '#{query}' to game"
-      send_reply(response: execute_message(query), original: js)
+    unless js["user_name"] && @bot_name.include?(js["user_name"])
+      query = extract_message(js)
+      command_response = check_command(query)
+      if command_response
+        puts "special command #{query} run"
+        send_reply(response: command_response, original: js)
+      else
+        puts "sending '#{query}' to game"
+        send_reply(response: execute_message(query), original: js)
+      end
     end
   end
 end
