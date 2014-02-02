@@ -74,7 +74,7 @@ def load_game(name)
 end
 
 def list_games
-  "games: " + Dir.foreach('games').to_a[2..-1].join("\n")
+  "games: " + (Dir.foreach('games').to_a - [".", ".."]).join("\n")
 end
 
 def load_remote(url)
