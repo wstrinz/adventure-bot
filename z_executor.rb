@@ -61,6 +61,9 @@ def url_to_filename(url)
 end
 
 def load_game(name)
+  if name[0] == "<"
+    name = name[1..-2]
+  end
   if name[URI::regexp]
     load_remote name
     setup_game("games/#{url_to_filename(name)}")
@@ -79,7 +82,7 @@ end
 
 def load_remote(url)
   open("games/" + url_to_filename(url),'w'){|f|
-    require 'pry'; binding.pry
+    puts url
     f.write open(url).read
   }
 end
