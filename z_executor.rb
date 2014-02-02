@@ -49,6 +49,8 @@ def check_command(message)
     load_game(message.scan(/^\/load (.+)/).first.first)
   when /^\/help/
     "special commands are '/reset', and '/load <file>'"
+  when /^\/games/
+    list_games
   else
     nil
   end
@@ -65,6 +67,10 @@ def load_game(name)
   else
     setup_game("games/#{name}")
   end
+end
+
+def list_games
+  "games: " + Dir.foreach('games').to_a[2..-1].join("\n")
 end
 
 def load_remote(url)
