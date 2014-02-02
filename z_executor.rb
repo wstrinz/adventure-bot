@@ -1,11 +1,14 @@
 require 'redis'
 require 'json'
 require 'dorothy'
+require 'uri'
+require 'open-uri'
 
-def setup_game(file='LostPig.z8')
+def setup_game(file='games/LostPig.z8')
   @game = Z::Machine.new(file)
   @game.run
   @bot_name = ["@adventure","@a"]
+  @game.output.join
 end
 
 def wait_for_messages
@@ -43,12 +46,29 @@ def check_command(message)
     setup_game
     @game.output.join
   when /^\/load .+/
-    "loading other stories not implemented yet"
+    load_game(message.scan(/^\/load (.+)/).first.first)
   when /^\/help/
     "special commands are '/reset', and '/load <file>'"
   else
     nil
   end
+end
+
+def url_to_filename(url)
+  url.split("/").last
+end
+
+def load_game(name)
+  if name[URI::regexp]
+    load_remote name
+    setup_game("games/#{url_to_filename(name)}")
+  else
+    setup_game("games/#{name}")
+  end
+end
+
+def load_remote(url)
+  open("games/" + url_to_filename(url),'w'){|f| f.write open(url).read }
 end
 
 def execute_message(message)
