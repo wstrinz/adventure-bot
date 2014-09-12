@@ -1,8 +1,8 @@
 GIT
-  remote: https://github.com/wstrinz/dorothy.git
-  revision: cd0bf13671770bf684ed7b3286b9d0013e02a813
+  remote: https://github.com/fourks/dorothy
+  revision: 4f7d62cd2281e000e9286261e59131fc081e2751
   specs:
-    dorothy (0.0.2.pre)
+    dorothy (0.0.3)
 
 GEM
   remote: https://rubygems.org/
